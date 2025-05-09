@@ -15,7 +15,7 @@ func main() {
 	}
 
 	sv := server.Init()
-	log.Printf("Server starting on %s \n\n\n", sv.Addr)
+	log.Printf("Service starting on %s \n\n\n", sv.Addr)
 
 	err = sv.ListenAndServe()
 	if err != nil {
