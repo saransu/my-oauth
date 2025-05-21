@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"konsys.co/ks-go-http/internal/server"
+	"my-oauth-server/internal/server"
 )
 
 func main() {

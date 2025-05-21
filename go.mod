@@ -1,4 +1,4 @@
-module konsys.co/ks-go-http
+module my-oauth-server
 
 go 1.24.2
 
