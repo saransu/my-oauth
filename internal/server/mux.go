@@ -10,7 +10,7 @@ func newMux() *http.ServeMux {
 
 	mux.HandleFunc("/healthz", healthCheck)
 
-	oauth.RegisterOAuthController(mux)
+	oauth.RegisterController(mux)
 
 	return mux
 }

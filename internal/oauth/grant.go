@@ -1,8 +1,6 @@
 package oauth
 
 import (
-	"encoding/json"
-	"fmt"
 	"my-oauth-server/internal/utils"
 	"net/http"
 )
@@ -17,15 +15,7 @@ func grantAuthorizationCode(w http.ResponseWriter, req *http.Request) {
 
 	if cID != clientID {
 		w.WriteHeader(http.StatusUnauthorized)
-		resp := map[string]string{
-			"error": "client_id mismatched",
-		}
-		respBody, err := json.Marshal(resp)
-		if err != nil {
-			fmt.Fprintf(w, "something went wrong")
-		}
-
-		w.Write(respBody)
+		utils.WriteResponseBody(w, utils.ResponseBody{Error: "invalid client_id"})
 		return
 	}
 
@@ -38,11 +28,18 @@ func grantAuthorizationCode(w http.ResponseWriter, req *http.Request) {
 
 func grantAccessToken(w http.ResponseWriter, req *http.Request) {
 	code := req.URL.Query().Get("code")
+	cID := req.URL.Query().Get("client_id")
 	cSecret := req.URL.Query().Get("client_secret")
 
 	if code != authCode {
 		w.WriteHeader(http.StatusUnauthorized)
 		utils.WriteResponseBody(w, utils.ResponseBody{Error: "invalid code"})
+		return
+	}
+
+	if cID != clientID {
+		w.WriteHeader(http.StatusUnauthorized)
+		utils.WriteResponseBody(w, utils.ResponseBody{Error: "invalid client_id"})
 		return
 	}
 

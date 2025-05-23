@@ -1,12 +1,11 @@
 package oauth
 
 import (
-	"encoding/json"
-	"fmt"
+	"my-oauth-server/internal/utils"
 	"net/http"
 )
 
-func RegisterOAuthController(mux *http.ServeMux) {
+func RegisterController(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/v1/oauth", handleGrant)
 	mux.HandleFunc("GET /api/v1/oauth/token", grantAccessToken)
 }
@@ -17,15 +16,7 @@ func handleGrant(w http.ResponseWriter, req *http.Request) {
 	gt, err := parseGrantType(rawGT)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		r := map[string]string{
-			"error": err.Error(),
-		}
-		rb, err := json.Marshal(r)
-		if err != nil {
-			fmt.Fprintf(w, "something went wrong")
-		}
-
-		w.Write(rb)
+		utils.WriteResponseBody(w, utils.ResponseBody{Data: nil, Error: err.Error()})
 		return
 	}
 
