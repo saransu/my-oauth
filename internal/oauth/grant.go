@@ -49,7 +49,18 @@ func grantAccessToken(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	u := utils.User{
+		ID:   1,
+		Name: "Saran",
+		Age:  20,
+	}
+
+	token, err := utils.GenerateToken(u)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		utils.WriteResponseBody(w, utils.ResponseBody{Error: err.Error()})
+	}
 	utils.WriteResponseBody(w, utils.ResponseBody{
-		Data: "",
+		Data: token,
 	})
 }

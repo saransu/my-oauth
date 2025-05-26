@@ -14,6 +14,7 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
+	go server.InitSocket()
 	sv := server.Init()
 	log.Printf("Service starting on %s \n\n\n", sv.Addr)
 
