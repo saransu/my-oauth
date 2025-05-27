@@ -15,7 +15,9 @@ func main() {
 	}
 
 	go server.InitSocket()
+	server.InitQueue()
 	sv := server.Init()
+
 	log.Printf("Service starting on %s \n\n\n", sv.Addr)
 
 	err = sv.ListenAndServe()
