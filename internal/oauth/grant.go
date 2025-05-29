@@ -5,28 +5,25 @@ import (
 	"net/http"
 )
 
-const clientID = "ZRPY48s9kjLb2Pr5IY5zCgYKxWk30g3V"
-const clientSecret = "H1XuhfthXcTuQ0IKzH28hVSMsWgoIpju"
+const ClientID = "ZRPY48s9kjLb2Pr5IY5zCgYKxWk30g3V"
+const ClientSecret = "H1XuhfthXcTuQ0IKzH28hVSMsWgoIpju"
 
 var authCode string
 
 func grantAuthorizationCode(w http.ResponseWriter, req *http.Request) {
 	cID := req.URL.Query().Get("client_id")
 
-	if cID != clientID {
+	if cID != ClientID {
 		w.WriteHeader(http.StatusUnauthorized)
 		utils.WriteResponseBody(w, utils.ResponseBody{Error: "invalid client_id"})
 		return
 	}
 
 	authCode = utils.NewRandomString(64)
-	resp := map[string]string{
-		"code": authCode,
-	}
-	utils.WriteResponseBody(w, utils.ResponseBody{Message: "success", Data: resp})
+	utils.WriteResponseBody(w, utils.ResponseBody{Message: "success", Data: authCode})
 }
 
-func grantAccessToken(w http.ResponseWriter, req *http.Request) {
+func GrantAccessToken(w http.ResponseWriter, req *http.Request) {
 	code := req.URL.Query().Get("code")
 	cID := req.URL.Query().Get("client_id")
 	cSecret := req.URL.Query().Get("client_secret")
@@ -37,13 +34,13 @@ func grantAccessToken(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	if cID != clientID {
+	if cID != ClientID {
 		w.WriteHeader(http.StatusUnauthorized)
 		utils.WriteResponseBody(w, utils.ResponseBody{Error: "invalid client_id"})
 		return
 	}
 
-	if cSecret != clientSecret {
+	if cSecret != ClientSecret {
 		w.WriteHeader(http.StatusUnauthorized)
 		utils.WriteResponseBody(w, utils.ResponseBody{Error: "invalid client_secret"})
 		return

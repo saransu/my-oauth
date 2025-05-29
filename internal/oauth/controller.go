@@ -6,11 +6,11 @@ import (
 )
 
 func RegisterController(mux *http.ServeMux) {
-	mux.HandleFunc("GET /api/v1/oauth", handleGrant)
-	mux.HandleFunc("GET /api/v1/oauth/token", grantAccessToken)
+	mux.HandleFunc("GET /api/v1/oauth", HandleGrant)
+	mux.HandleFunc("GET /api/v1/oauth/token", GrantAccessToken)
 }
 
-func handleGrant(w http.ResponseWriter, req *http.Request) {
+func HandleGrant(w http.ResponseWriter, req *http.Request) {
 	rawGT := req.URL.Query().Get("grant_type")
 
 	gt, err := parseGrantType(rawGT)

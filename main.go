@@ -4,8 +4,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	"my-oauth-server/internal/server"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
