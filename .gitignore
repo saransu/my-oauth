@@ -1,5 +1,6 @@
 tmp/
 bin/
+db/
 .env
 
 public.pem
